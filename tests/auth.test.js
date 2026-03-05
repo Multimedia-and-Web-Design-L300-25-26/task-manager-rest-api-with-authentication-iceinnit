@@ -2,9 +2,6 @@ import request from "supertest";
 import app from "../src/app.js";
 
 describe("Auth Routes", () => {
-
-  let token;
-
   it("should register a user", async () => {
     const res = await request(app)
       .post("/api/auth/register")
@@ -19,6 +16,14 @@ describe("Auth Routes", () => {
   });
 
   it("should login user and return token", async () => {
+    await request(app)
+      .post("/api/auth/register")
+      .send({
+        name: "Test User",
+        email: "test@example.com",
+        password: "123456"
+      });
+
     const res = await request(app)
       .post("/api/auth/login")
       .send({
@@ -28,8 +33,6 @@ describe("Auth Routes", () => {
 
     expect(res.statusCode).toBe(200);
     expect(res.body.token).toBeDefined();
-
-    token = res.body.token;
   });
 
 });
