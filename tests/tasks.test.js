@@ -4,21 +4,19 @@ import app from "../src/app.js";
 let token;
 let taskId;
 
-beforeAll(async () => {
-  // Register
+beforeEach(async () => {
   await request(app)
     .post("/api/auth/register")
     .send({
       name: "Task User",
-      email: "task@example.com",
+      email: "test@test.com",
       password: "123456"
     });
 
-  // Login
   const res = await request(app)
     .post("/api/auth/login")
     .send({
-      email: "task@example.com",
+      email: "test@test.com",
       password: "123456"
     });
 
